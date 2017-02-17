@@ -52,6 +52,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PostcodesApi.cs" />
+    <Compile Include="StopPoint.cs" />
     <Compile Include="TflApi.cs" />
   </ItemGroup>
   <ItemGroup>

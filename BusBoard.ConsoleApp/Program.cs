@@ -11,13 +11,18 @@ namespace BusBoard.ConsoleApp
       var postcode = PromptForPostcode();
 
       var coordinate = new PostcodesApi().GetCoordinateForPostcode(postcode);
-      Console.WriteLine($"Your postcode is at {coordinate.Latitude}, {coordinate.Longitude}");
+      var nearbyStops = new TflApi().GetStopsNear(coordinate);
 
-      /*
-      var predictions = new TflApi().GetArrivalPredictions(stopId);
-      var predictionsToDisplay = predictions.OrderBy(p => p.TimeToStation).Take(5);
-      DisplayPredictions(predictionsToDisplay);
-      */
+      foreach (var stop in nearbyStops.Take(2))
+      {
+        Console.WriteLine($"Departure board for {stop.CommonName}");
+
+        var predictions = new TflApi().GetArrivalPredictions(stop.NaptanId);
+        var predictionsToDisplay = predictions.OrderBy(p => p.TimeToStation).Take(5);
+        DisplayPredictions(predictionsToDisplay);
+
+        Console.WriteLine();
+      }
 
       Console.ReadLine();
     }
