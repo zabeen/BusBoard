@@ -19,9 +19,23 @@ namespace BusBoard.ConsoleApp
       while (true)
       {
         var postcode = PromptForPostcode();
-
         var coordinate = postcodesApi.GetCoordinateForPostcode(postcode);
+
+        if (coordinate == null)
+        {
+          Console.WriteLine("Sorry, I didn't recognise that postcode");
+          Console.WriteLine();
+          continue;
+        }
+
         var nearbyStops = tflApi.GetStopsNear(coordinate);
+
+        if (nearbyStops.Count == 0)
+        {
+          Console.WriteLine("Sorry, there are no bus stops near there");
+          Console.WriteLine();
+          continue;
+        }
 
         foreach (var stop in nearbyStops.Take(2))
         {
@@ -41,6 +55,14 @@ namespace BusBoard.ConsoleApp
       Console.WriteLine($"Departure board for {stop.CommonName}");
 
       var predictions = tflApi.GetArrivalPredictions(stop.NaptanId);
+
+      if (predictions.Count == 0)
+      {
+        Console.WriteLine("None");
+        Console.WriteLine();
+        return;
+      }
+
       var predictionsToDisplay = predictions.OrderBy(p => p.TimeToStation).Take(5);
       DisplayPredictions(predictionsToDisplay);
 
