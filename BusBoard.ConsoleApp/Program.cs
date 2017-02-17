@@ -8,19 +8,24 @@ namespace BusBoard.ConsoleApp
   {
     static void Main(string[] args)
     {
-      var stopId = PromptForStopId();
+      var postcode = PromptForPostcode();
 
+      var coordinate = new PostcodesApi().GetCoordinateForPostcode(postcode);
+      Console.WriteLine($"Your postcode is at {coordinate.Latitude}, {coordinate.Longitude}");
+
+      /*
       var predictions = new TflApi().GetArrivalPredictions(stopId);
       var predictionsToDisplay = predictions.OrderBy(p => p.TimeToStation).Take(5);
       DisplayPredictions(predictionsToDisplay);
+      */
 
       Console.ReadLine();
     }
 
-    private static string PromptForStopId()
+    private static string PromptForPostcode()
     {
-      Console.Write("Enter your stop ID: ");
-      return Console.ReadLine(); // Example: "490008660N"
+      Console.Write("Enter your postcode: ");
+      return Console.ReadLine(); // Example: "NW5 1TL"
     }
 
     private static void DisplayPredictions(IEnumerable<ArrivalPrediction> predictionsToDisplay)
