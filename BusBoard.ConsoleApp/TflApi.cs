@@ -5,23 +5,24 @@ namespace BusBoard.ConsoleApp
 {
   public class TflApi
   {
+    private readonly RestClient restClient = new RestClient(@"https://api.tfl.gov.uk");
+
     public List<ArrivalPrediction> GetArrivalPredictions(string stopId)
     {
-      var client = new RestClient(@"https://api.tfl.gov.uk");
       var request = new RestRequest("StopPoint/{stopId}/Arrivals", Method.GET);
       request.AddUrlSegment("stopId", stopId);
-      var predictions = client.Execute<List<ArrivalPrediction>>(request).Data;
+      var predictions = restClient.Execute<List<ArrivalPrediction>>(request).Data;
       return predictions;
     }
 
     public List<StopPoint> GetStopsNear(Coordinate coordinate)
     {
-      var client = new RestClient(@"https://api.tfl.gov.uk");
       var request = new RestRequest("StopPoint", Method.GET);
       request.AddParameter("stopTypes", "NaptanPublicBusCoachTram");
       request.AddParameter("lat", coordinate.Latitude);
       request.AddParameter("lon", coordinate.Longitude);
-      var stops = client.Execute<StopPointResult>(request).Data.StopPoints;
+      request.AddParameter("radius", 1000);
+      var stops = restClient.Execute<StopPointResult>(request).Data.StopPoints;
       return stops;
     }
 

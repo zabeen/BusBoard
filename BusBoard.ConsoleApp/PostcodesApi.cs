@@ -4,12 +4,13 @@ namespace BusBoard.ConsoleApp
 {
   public class PostcodesApi
   {
+    private readonly RestClient restClient = new RestClient(@"http://api.postcodes.io/");
+
     public Coordinate GetCoordinateForPostcode(string postCode)
     {
-      var client = new RestClient(@"http://api.postcodes.io/");
       var request = new RestRequest("postcodes/{postCode}", Method.GET);
       request.AddUrlSegment("postCode", postCode);
-      var coordinate = client.Execute<PostcodeResult>(request).Data.Result;
+      var coordinate = restClient.Execute<PostcodeResult>(request).Data.Result;
       return coordinate;
     }
 
