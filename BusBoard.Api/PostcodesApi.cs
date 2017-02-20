@@ -1,6 +1,6 @@
 using RestSharp;
 
-namespace BusBoard.ConsoleApp
+namespace BusBoard.Api
 {
   public class PostcodesApi
   {
