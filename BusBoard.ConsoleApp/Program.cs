@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace BusBoard.ConsoleApp
 {
@@ -11,6 +12,8 @@ namespace BusBoard.ConsoleApp
 
     static void Main()
     {
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
       new Program().Run();
     }
 
