@@ -8,3 +8,15 @@
 <div class="row">
     <p>You entered postcode @Model.PostCode</p>
 </div>
+
+@foreach (var stop in Model.Stops)
+{
+    <h3>Bus stop: @stop.Name</h3>
+
+    foreach (var arrival in stop.Arrivals.OrderBy(a => a.TimeToStation))
+    {
+        <div class="row">
+            In @(arrival.TimeToStation/60) minutes: @arrival.LineName to @arrival.DestinationName
+        </div>
+    }
+}
