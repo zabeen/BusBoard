@@ -9,33 +9,24 @@ namespace BusBoard.ConsoleApp
 {
   class Program
   {
+      
     static void Main(string[] args)
     {
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             // Get stop code from user
             Console.WriteLine("Post code:");
-            string str = Console.ReadLine();
-            
-            
-            // Get Arrival Info using TFL Bus API
-            BusAPI bus = new BusAPI();
-            //List<string> arrivals = bus.GetArrivalInfoAsString(str, 5);
-            // Display info to user
-            //arrivals.ForEach(a => Console.WriteLine(a));
+            string postcode = Console.ReadLine();
 
+            // Get number of stops from user
+            Console.WriteLine("Number of stops:");
+            string stopNumber = Console.ReadLine();
 
-            PostcodeAPI pCode = new PostcodeAPI();
-            Postcode pc = pCode.RequestPostCodeInfo(str);
-            Console.WriteLine(pc.Latitude + " " + pc.Longitude);
-            //Console.WriteLine(string.Join(",", bus.RequestStopInfo(pc.Latitude, pc.Longitude)
-            //                .Select(r => r.commonName).ToList()));
+            // Get bus arrival info for 2 closest stops to postcode
+            BusArrivals busArr = new BusArrivals();
+            List<BusArrivalInfo> busInfo = busArr.GetBusArrivalsByPostcode(postcode, Convert.ToInt32(stopNumber));
 
-
-            List<StopPoint> Info = bus.RequestStopInfo(pc.Latitude, pc.Longitude);
-            List<string> s = Info.Select(i => i.commonName).ToList();
-            Console.WriteLine(string.Join(",", s));
-
-            Console.ReadLine();
+            Console.WriteLine(string.Join("\n", busInfo.Select(b => b.StopLetter + " - " + b.StopName + " - " + b.RouteNumber + " - " + b.TimeToArrival).ToList()));
         }
   }
 }

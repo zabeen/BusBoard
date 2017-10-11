@@ -6,14 +6,15 @@ using System.Linq;
 
 namespace BusBoard.ConsoleApp
 {
-    public class BusAPI
+    public class TFLBusStopAPI
     {
         public RestClient client = new RestClient();
 
-        public BusAPI()
+        public TFLBusStopAPI()
         {
             // create Rest client with TFL API URL
             client.BaseUrl = new Uri("https://api.tfl.gov.uk");
+            client.Authenticator = new HttpBasicAuthenticator("4415e479", "f8cd5998dbf55e7ef3fb667f82098598");
 
         }
 
@@ -46,12 +47,10 @@ namespace BusBoard.ConsoleApp
 
         public List<StopPoint> RequestStopInfo(decimal lat, decimal lon)
         {
-            List<string> stopTypes = RequestStopType();
-            string s =string.Join(",", stopTypes);
             // Create request
             var request = new RestRequest
             {
-                Resource = "StopPoint/?stopTypes=" + s + "&lat=" + lat.ToString() + "&lon=" + lon.ToString() + "&modes=bus",
+                Resource = "StopPoint/?stopTypes=NaptanPublicBusCoachTram&lat=" + lat.ToString() + "&lon=" + lon.ToString(),// + "&modes=bus",
                 RootElement = "stopPoints"
             };
             var response = client.Execute<List<StopPoint>>(request);
