@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BusBoard.ConsoleApp
+namespace BusBoard.Api
 {
     public class PostcodeInfo
     {

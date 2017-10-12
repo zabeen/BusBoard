@@ -4,7 +4,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System.Linq;
 
-namespace BusBoard.ConsoleApp
+namespace BusBoard.Api
 {
     public class PostcodeAPI
     {

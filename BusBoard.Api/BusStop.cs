@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BusBoard.ConsoleApp
+namespace BusBoard.Api
 {
     public class BusStop
     {
