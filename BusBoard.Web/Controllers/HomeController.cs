@@ -22,8 +22,9 @@ namespace BusBoard.Web.Controllers
 
             var info = new Web.ViewModels.BusInfo()
             {
-                PostCode = selection.Postcode,
-                NumberOfStops = selection.NumberOfStops,
+                PostCode = selection.Postcode.ToUpper(),
+
+                NumberOfStops = (selection.NumberOfStops == null) ? "All" : selection.NumberOfStops,
 
                 // Get arrival info by submitted postcode
                 Stops = (selection.NumberOfStops == null) ?

@@ -8,12 +8,16 @@
 <h2>BusInfo</h2>
 
 <div class="row">
-    <p>@Model.NumberOfStops closest bus stop(s) to postcode @Model.PostCode</p>
+    <p>
+	    @string.Format("{0} closest bus stop(s) to postcode {1}.", @Model.NumberOfStops, @Model.PostCode)
+	</p>
 
     @foreach (BusStopInfo stop in @Model.Stops)
 	{
-	    <p>Stop @stop.Letter - @stop.Name (@stop.Distance m away) - @stop.Buses.Count buses</p>
-
+	    <p>
+	        @string.Format("Stop {0} - {1} ({2}m away) - {3} buses", stop.Letter, @stop.Name, @stop.Distance, @stop.Buses.Count)
+	    </p>
+         
         <table>
             <tr>
                 <th>Route</th>
