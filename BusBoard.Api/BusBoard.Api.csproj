@@ -45,12 +45,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArrivalInfo.cs" />
-    <Compile Include="BusArrivalInfo.cs" />
+    <Compile Include="BusStopInfo.cs" />
     <Compile Include="BusStop.cs" />
     <Compile Include="PostcodeAPI.cs" />
     <Compile Include="PostcodeInfo.cs" />
     <Compile Include="StopPointInfo.cs" />
     <Compile Include="TFLStopPointAPI.cs" />
+    <Compile Include="BusInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -10,9 +10,9 @@ namespace BusBoard.ConsoleApp
 {
   class Program
   {
-      
-    static void Main(string[] args)
-    {
+
+        static void Main(string[] args)
+        {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             // Get stop code from user
@@ -25,9 +25,22 @@ namespace BusBoard.ConsoleApp
 
             // Get bus arrival info for 2 closest stops to postcode
             BusStop bStop = new BusStop();
-            List<BusArrivalInfo> busInfo = bStop.GetBusStopArrivalsByPostcode(postcode, Convert.ToInt32(stopNumber));
+            List<BusStopInfo> arrivals = bStop.GetBusStopArrivalsByPostcode(postcode, Convert.ToInt32(stopNumber));
 
-            Console.WriteLine(string.Join("\n", busInfo.Select(b => b.StopLetter + " - " + b.StopName + " - " + b.RouteNumber + " - " + b.TimeToArrival).ToList()));
+            // for each stop
+            foreach (BusStopInfo a in arrivals)
+            {
+                // write out stop info
+                Console.WriteLine("Buses arriving at stop " + a.Letter + " - " + a.Name + " (" + a.Distance.ToString() + "m away)");
+
+                // write out bus info for this stop
+                foreach (BusInfo bus in a.Buses)
+                {
+                    Console.WriteLine(bus.RouteNumber + " - " + bus.Destination + " - " + bus.TimeToArrival);
+                }
+
+                Console.WriteLine();
+            }
         }
-  }
+    }
 }
