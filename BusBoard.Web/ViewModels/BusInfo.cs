@@ -7,6 +7,8 @@ namespace BusBoard.Web.ViewModels
     {
         public string PostCode { get; set; }
 
+        public bool IsPostcodeValid { get; set; }
+
         public string NumberOfStops { get; set; }
 
         public List<BusStopInfo> Stops { get; set; }

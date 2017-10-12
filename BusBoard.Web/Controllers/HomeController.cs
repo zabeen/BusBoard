@@ -18,19 +18,27 @@ namespace BusBoard.Web.Controllers
         {
             // Add some properties to the BusInfo view model with the data you want to render on the page.
             // Write code here to populate the view model with info from the APIs.
-            // Then modify the view (in Views/Home/BusInfo.cshtml) to render upcoming buses.
+            // Then modify the view (in Views/Home/BusInfo.cshtml) to render upcoming buses
 
+            // Validate submitted postcode
+            PostcodeAPI pc = new PostcodeAPI();
+            bool isPcValid = pc.ValidPostcode(selection.Postcode);
+
+            // populate info object to be passed to view
             var info = new Web.ViewModels.BusInfo()
             {
-                PostCode = selection.Postcode.ToUpper(),
+                PostCode = (selection.Postcode == null) ? "" : selection.Postcode.ToUpper(),
+
+                IsPostcodeValid = isPcValid,
 
                 NumberOfStops = (selection.NumberOfStops == null) ? "All" : selection.NumberOfStops,
-
-                // Get arrival info by submitted postcode
-                Stops = (selection.NumberOfStops == null) ?
-                    Api.BusStop.GetBusStopArrivalsByPostcode(selection.Postcode) :
-                       Api.BusStop.GetBusStopArrivalsByPostcode(selection.Postcode, Convert.ToInt32(selection.NumberOfStops))
             };
+
+            // Get arrival info by submitted postcode, only if postcode is valid
+            if (isPcValid)
+                info.Stops = (selection.NumberOfStops == null) ?
+                    Api.BusStop.GetBusStopArrivalsByPostcode(selection.Postcode) :
+                    Api.BusStop.GetBusStopArrivalsByPostcode(selection.Postcode, Convert.ToInt32(selection.NumberOfStops));
 
             return View(info);
         }

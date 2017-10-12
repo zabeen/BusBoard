@@ -13,8 +13,8 @@
         @using (Html.BeginForm("BusInfo", "Home", FormMethod.Get))
         {
             <fieldset>
-                <legend>Post Code:</legend>
-                @Html.TextBoxFor(m => m.Postcode)
+                <legend>Post Code (required):</legend>
+                @Html.TextBoxFor(m => m.Postcode, new { required = "required" })
             </fieldset>
 
             <fieldset>

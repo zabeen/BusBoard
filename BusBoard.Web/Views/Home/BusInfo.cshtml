@@ -8,10 +8,20 @@
 <h2>BusInfo</h2>
 
 <div class="row">
-    <p>
-	    @string.Format("{0} closest bus stop(s) to postcode {1}.", @Model.NumberOfStops, @Model.PostCode)
-	</p>
-
+	@if (Model.IsPostcodeValid)
+	{
+        <p>@string.Format("{0} closest bus stop(s) to postcode {1}:", @Model.NumberOfStops, @Model.PostCode)</p>
+	}
+	else
+	{
+	    <p>@string.Format("Error: {0} is not a valid postcode.", @Model.PostCode)</p>	
+	}
+	
+    @if (@Model.Stops.Count == 0)
+	{
+	    <p>No bus stops found within the search radius.</p>
+	}
+	
     @foreach (BusStopInfo stop in @Model.Stops)
 	{
 	    <p>

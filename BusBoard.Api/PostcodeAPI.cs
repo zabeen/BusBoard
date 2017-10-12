@@ -16,6 +16,19 @@ namespace BusBoard.Api
             client.BaseUrl = new Uri("http://api.postcodes.io");
         }
 
+        public bool ValidPostcode(string postcode)
+        {
+            // Create request
+            var request = new RestRequest
+            {
+                Resource = "postcodes/" + postcode + "/validate",
+                RootElement="result"
+            };
+            var response = client.Execute<bool>(request);
+
+            return response.Data;
+        }
+
         public PostcodeInfo RequestPostcodeInfo(string postcode)
         {
             // Create request
@@ -28,5 +41,6 @@ namespace BusBoard.Api
 
             return response.Data;
         }
+
     }
 }
