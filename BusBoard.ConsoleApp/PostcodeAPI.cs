@@ -16,15 +16,15 @@ namespace BusBoard.ConsoleApp
             client.BaseUrl = new Uri("http://api.postcodes.io");
         }
 
-        public Postcode RequestPostCodeInfo(string postCode)
+        public PostcodeInfo RequestPostcodeInfo(string postcode)
         {
             // Create request
             var request = new RestRequest
             {
-                Resource = "postcodes/" + postCode,
+                Resource = "postcodes/" + postcode,
                 RootElement = "result"
             };
-            var response = client.Execute<Postcode>(request);
+            var response = client.Execute<PostcodeInfo>(request);
 
             return response.Data;
         }

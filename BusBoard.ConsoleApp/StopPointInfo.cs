@@ -1,9 +1,9 @@
 ﻿using System;
 namespace BusBoard.ConsoleApp
 {
-    public class StopPoint
+    public class StopPointInfo
     {
-        public string naptanId {get; set;}
+        public string naptanId { get; set;}
         public string stopLetter { get; set; }
         public string id { get; set; }       
         public string commonName { get; set; }

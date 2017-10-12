@@ -6,14 +6,17 @@ using System.Linq;
 
 namespace BusBoard.ConsoleApp
 {
-    public class TFLBusStopAPI
+    public class TFLStopPointAPI
     {
         public RestClient client = new RestClient();
 
-        public TFLBusStopAPI()
+        private string baseURL = "https://api.tfl.gov.uk";
+        private string stopPointURI = "StopPoint/";
+
+        public TFLStopPointAPI()
         {
             // create Rest client with TFL API URL
-            client.BaseUrl = new Uri("https://api.tfl.gov.uk");
+            client.BaseUrl = new Uri(baseURL);
             client.Authenticator = new HttpBasicAuthenticator("4415e479", "f8cd5998dbf55e7ef3fb667f82098598");
 
         }
@@ -23,7 +26,7 @@ namespace BusBoard.ConsoleApp
             // Create request
             var request = new RestRequest
             {
-                Resource = "StopPoint/" + stopCode + "/Arrivals"
+                Resource = stopPointURI + stopCode + "/Arrivals"
             };
             var response = client.Execute<List<ArrivalInfo>>(request);
 
@@ -45,15 +48,15 @@ namespace BusBoard.ConsoleApp
                            .ToList();
         }
 
-        public List<StopPoint> RequestStopInfo(decimal lat, decimal lon)
+        public List<StopPointInfo> RequestStopInfo(decimal lat, decimal lon)
         {
             // Create request
             var request = new RestRequest
             {
-                Resource = "StopPoint/?stopTypes=NaptanPublicBusCoachTram&lat=" + lat.ToString() + "&lon=" + lon.ToString(),// + "&modes=bus",
+                Resource =  stopPointURI + "?stopTypes=NaptanPublicBusCoachTram&lat=" + lat.ToString() + "&lon=" + lon.ToString(),
                 RootElement = "stopPoints"
             };
-            var response = client.Execute<List<StopPoint>>(request);
+            var response = client.Execute<List<StopPointInfo>>(request);
             return response.Data;
         }
 
@@ -62,7 +65,7 @@ namespace BusBoard.ConsoleApp
             // Create request
             var request = new RestRequest
             {
-                Resource = "StopPoint/Meta/StopTypes"
+                Resource = stopPointURI + "Meta/StopTypes"
             };
             var response = client.Execute<List<string>>(request);
 

@@ -23,8 +23,8 @@ namespace BusBoard.ConsoleApp
             string stopNumber = Console.ReadLine();
 
             // Get bus arrival info for 2 closest stops to postcode
-            BusArrivals busArr = new BusArrivals();
-            List<BusArrivalInfo> busInfo = busArr.GetBusArrivalsByPostcode(postcode, Convert.ToInt32(stopNumber));
+            BusStop bStop = new BusStop();
+            List<BusArrivalInfo> busInfo = bStop.GetBusStopArrivalsByPostcode(postcode, Convert.ToInt32(stopNumber));
 
             Console.WriteLine(string.Join("\n", busInfo.Select(b => b.StopLetter + " - " + b.StopName + " - " + b.RouteNumber + " - " + b.TimeToArrival).ToList()));
         }
