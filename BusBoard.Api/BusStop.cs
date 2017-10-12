@@ -10,8 +10,11 @@ namespace BusBoard.Api
         {
         }
 
-        public List<BusStopInfo> GetBusStopArrivalsByPostcode (string postcode, int maxNumberOfStops)
+        public static List<BusStopInfo> GetBusStopArrivalsByPostcode (string postcode, int maxNumberOfStops = -1)
         {
+            // Create new list of BusArrivals - returned object
+            List<BusStopInfo> bStops = new List<BusStopInfo>();
+
             //Call PostCodeAPI.RequestPostCodeInfo(postcode)
             PostcodeAPI pcAPI = new PostcodeAPI();
 
@@ -24,11 +27,11 @@ namespace BusBoard.Api
             // Returns List of StopPoints(Bus stops)
             List<StopPointInfo> stopsList = stopAPI.RequestStopInfo(pc.Latitude, pc.Longitude);
 
-            // Create new list of BusArrivals
-            List<BusStopInfo> bStops = new List<BusStopInfo>();
+            // Set number of stops to take
+            int stopNo = (maxNumberOfStops < 0 || maxNumberOfStops > stopsList.Count) ? stopsList.Count : maxNumberOfStops;
 
             // For each StopPoint (Limit StopPoints to max number of stops, closest first)
-            foreach (StopPointInfo stop in stopsList.OrderBy(s => s.distance).Take(maxNumberOfStops).ToList())
+            foreach (StopPointInfo stop in stopsList.OrderBy(s => s.distance).Take(stopNo).ToList())
             {
                 // Initialise a new bus stop object
                 BusStopInfo bStop = new BusStopInfo()

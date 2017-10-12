@@ -12,12 +12,17 @@
     <div class="col-md-12">
         @using (Html.BeginForm("BusInfo", "Home", FormMethod.Get))
         {
-        <fieldset>
-            <legend>Post Code:</legend>
-            @Html.TextBoxFor(m => m.Postcode)
+            <fieldset>
+                <legend>Post Code:</legend>
+                @Html.TextBoxFor(m => m.Postcode)
+            </fieldset>
 
-            <input type="submit" value="Get Bus Info" />
-        </fieldset>
+            <fieldset>
+                <legend>Number of Stops (optional):</legend>
+                @Html.TextBoxFor(m => m.NumberOfStops)
+            </fieldset>
+
+            <input type="submit" value="Get Bus Info" />		
         }
     </div>
 </div>
